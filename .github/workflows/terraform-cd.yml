@@ -1,0 +1,40 @@
+name: "Terraform CD"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'environments/dev/**'
+      - 'modules/**'
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-apply:
+    name: "Terraform Apply"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./environments/dev
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.5.7
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -no-color
