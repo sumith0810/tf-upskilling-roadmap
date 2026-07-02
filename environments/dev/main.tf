@@ -23,7 +23,7 @@ module "dev_gke" {
   source       = "../../modules/gke"
   cluster_name = "dev-platform-cluster"
   region       = var.region
-  
+
   # Dependency Injection: Passing the output of the VPC module straight into GKE
   network_name = module.dev_vpc.network_name
 }
