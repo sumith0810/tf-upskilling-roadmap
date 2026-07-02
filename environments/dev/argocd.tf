@@ -14,5 +14,5 @@ resource "helm_release" "argocd" {
   namespace  = kubernetes_namespace.argocd.metadata[0].name
 
   # Ensure Helm waits for all pods to be ready before finishing
-  wait = false 
+  wait = false
 }
