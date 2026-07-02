@@ -20,3 +20,8 @@ output "cluster_endpoint" {
   value       = google_container_cluster.k8s_cluster.endpoint
   description = "The IP address of the cluster master"
 }
+
+output "cluster_ca_certificate" {
+  value       = google_container_cluster.k8s_cluster.master_auth[0].cluster_ca_certificate
+  description = "The public certificate authority of the cluster control plane"
+}
