@@ -15,4 +15,14 @@ resource "helm_release" "argocd" {
 
   # Ensure Helm waits for all pods to be ready before finishing
   wait = false
+
+  values = [
+    yamlencode({
+      configs = {
+        cm = {
+          "kustomize.buildOptions" = "--enable-helm"
+        }
+      }
+    })
+  ]
 }
